@@ -40,6 +40,8 @@ If you don’t use a blueprint, set manually:
 - Build: `pip install -r requirements.txt`
 - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
+**Important:** The start command must use `--host 0.0.0.0` and `--port $PORT`. Do not use `--reload` on Render. If you see "No open ports detected on 0.0.0.0", the start command is wrong: in the service Settings → Build & Deploy → Start Command, set it to exactly `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+
 ## Supabase schema
 
 Run the schema once in your Supabase project (SQL Editor → paste contents of `supabase/schema.sql` → Run) to create tables: `learning_goals`, `experiments`, `service_entries`.
