@@ -1,0 +1,49 @@
+# Nebibs Backend
+
+FastAPI backend for Nebibs, connected to Supabase. Deploy on Render.
+
+## Local setup
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # or .venv\Scripts\activate on Windows
+pip install -r requirements.txt
+cp .env.example .env
+```
+
+Set in `.env`:
+
+- `SUPABASE_URL` – from Supabase project settings (API URL)
+- `SUPABASE_KEY` – anon key (or service role if you need server-side bypass)
+
+Run:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+- API: http://127.0.0.1:8000  
+- Docs: http://127.0.0.1:8000/docs
+
+## Deploy on Render
+
+1. Push this repo to GitHub (or GitLab).
+2. In [Render](https://render.com): New → Web Service, connect the repo.
+3. Render will use `render.yaml` if present (name: nebibs-backend, Python, uvicorn).
+4. In the service Environment tab, add:
+   - `SUPABASE_URL` = your Supabase project URL
+   - `SUPABASE_KEY` = your Supabase anon (or service role) key
+5. Deploy. The service will be at `https://nebibs-backend.onrender.com` (or the name you chose).
+
+If you don’t use a blueprint, set manually:
+
+- Build: `pip install -r requirements.txt`
+- Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+
+## Endpoints
+
+- `GET /` – service info
+- `GET /health` – health check
+- `GET /docs` – Swagger UI
+
+Add routes in `app/` and use `get_supabase()` from `app.supabase_client` to access Supabase.
