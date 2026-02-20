@@ -40,10 +40,43 @@ If you don’t use a blueprint, set manually:
 - Build: `pip install -r requirements.txt`
 - Start: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
 
+## Supabase schema
+
+Run the schema once in your Supabase project (SQL Editor → paste contents of `supabase/schema.sql` → Run) to create tables: `learning_goals`, `experiments`, `service_entries`.
+
 ## Endpoints
 
 - `GET /` – service info
 - `GET /health` – health check
-- `GET /docs` – Swagger UI
+- `GET /docs` – **Swagger UI** (interactive API docs)
+- `GET /openapi.json` – OpenAPI schema
 
-Add routes in `app/` and use `get_supabase()` from `app.supabase_client` to access Supabase.
+### Learning goals
+- `GET /learning/goals` – list all
+- `GET /learning/goals/{id}` – get one
+- `POST /learning/goals` – create
+- `PATCH /learning/goals/{id}` – update
+- `DELETE /learning/goals/{id}` – delete
+
+### Experiments
+- `GET /experiments` – list all
+- `GET /experiments/{id}` – get one
+- `POST /experiments` – create
+- `PATCH /experiments/{id}` – update
+- `DELETE /experiments/{id}` – delete
+
+### Service entries
+- `GET /service/entries` – list all
+- `GET /service/entries/{id}` – get one
+- `POST /service/entries` – create
+- `PATCH /service/entries/{id}` – update
+- `DELETE /service/entries/{id}` – delete
+
+## Tests
+
+```bash
+pip install -r requirements.txt
+pytest tests/ -v
+```
+
+Tests mock Supabase; no env vars needed. All endpoints are covered (list, get, create, update, delete, 404 cases).
